@@ -6,6 +6,7 @@ import Home from './pages/home';
 import AllNotes from './pages/allNotes';
 import Note from './pages/note';
 import NotFound from './pages/notFound'
+import Login from './pages/login'
 
 import './App.css';
 
@@ -15,6 +16,7 @@ const App = () => {
       <div className="notist">
           <AppNav/>
           <Switch>
+            <Route exact path='/login' component={Login} />
             <Route exact path='/' component={Home} />
             <Route exact path='/notes' component={AllNotes} />
             <Route exact path='/notes/:noteTitle' component={Note} />

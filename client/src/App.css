@@ -6,17 +6,17 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background:yellow; 
+  background:yellow;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: yellow; 
+  background: yellow;
 }
 
 
@@ -49,4 +49,10 @@
 
 .noteText{
   overflow-y: scroll;
+}
+
+.form{
+  border: 1px solid rgb(180, 178, 178);
+  padding: 10px;
+  border-radius: 4px;
 }

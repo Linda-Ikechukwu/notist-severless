@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom';
-import { Heading, Flex,Text, IconButton } from "@chakra-ui/core";
+import { Heading, Flex, IconButton } from "@chakra-ui/core";
 
 const AppNav = () => {
     return (
@@ -9,11 +9,11 @@ const AppNav = () => {
                 <Heading as="h2" size="lg" fontStyle="italic">
                    <Link as={Link} to="/">Notist</Link>
                 </Heading>
-                <Link as={Link} to="/notes">
-                    <IconButton as="a" aria-label="See all Notes" icon="drag-handle" />
-                </Link>
+                <IconButton as="a" aria-label="See all Notes" icon="drag-handle">
+                   <Link as={Link} to="/notes"> </Link>
+                </IconButton>
+
             </Flex>
-            <Text mb="20px">Hey Joe, Whats on your mind today?</Text>
 
 
         </nav>

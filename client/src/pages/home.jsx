@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Image } from "@chakra-ui/core";
+import { Box, Image, Text } from "@chakra-ui/core";
 
 import NoteForm from '../components/noteForm';
 
@@ -8,6 +8,7 @@ import heroImage from '../assets/images/hero-image.png';
 const Home = () => {
    return (
       <Box>
+         <Text mb="20px">Hey Joe, Whats on your mind today?</Text>
          <Image
             src={heroImage}
             alt="Hero Image"
