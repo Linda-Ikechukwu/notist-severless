@@ -3,13 +3,16 @@ import {Link} from 'react-router-dom';
 
 import { Heading, Flex, IconButton, Button } from "@chakra-ui/core";
 
+import { Auth } from "aws-amplify";
+
 import { useAppContext } from "../libs/context";
 
 const AppNav = ({authStatus}) => {
 
     const { userHasAuthenticated } = useAppContext();
 
-    const handleLogout = () => {
+    const handleLogout = async() => {
+        await Auth.signOut();
         userHasAuthenticated(false);
     }
 

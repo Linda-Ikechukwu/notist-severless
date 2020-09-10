@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from "react";
 import { useContext, createContext } from "react";
-import {Switch, Route, Redirect} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import AppNav from './components/appNav';
 import Home from './pages/home';
@@ -19,19 +19,40 @@ const App = (props) => {
 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
+  const [isAuthenticating, setIsAuthenticating] = useState(true);//used to check if check if current user exists on app load
+
+  //Check if a current user exists on first app load:[]
+  useEffect(() => {
+    async function checkAuthentication() {
+      try {
+        await Auth.currentSession();
+        userHasAuthenticated(true);
+      }
+      catch (e) {
+        if (e !== 'No current user') {
+          alert(e);
+        }
+      }
+      console.log(isAuthenticated);
+      setIsAuthenticating(false);
+    }
+    checkAuthentication()
+  }, []);
+
   console.log(props);
 
   return (
+   !isAuthenticating &&
     <div className="App">
       <div className="notist">
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-          <AppNav authStatus={isAuthenticated}/>
+          <AppNav authStatus={isAuthenticated} />
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/' component={Home} />
             <Route exact path='/notes' component={AllNotes} />
             <Route exact path='/notes/:noteTitle' component={Note} />
-            <Route component={NotFound}/>
+            <Route component={NotFound} />
           </Switch>
         </AppContext.Provider>
       </div>
