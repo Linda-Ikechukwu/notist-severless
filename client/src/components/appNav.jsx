@@ -1,10 +1,28 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom';
-import { Heading, Flex, IconButton } from "@chakra-ui/core";
 
-const AppNav = () => {
+import { Heading, Flex, IconButton, Button } from "@chakra-ui/core";
+
+import { useAppContext } from "../libs/context";
+
+const AppNav = ({authStatus}) => {
+
+    const { userHasAuthenticated } = useAppContext();
+
+    const handleLogout = () => {
+        userHasAuthenticated(false);
+    }
+
     return (
         <nav>
+            {
+                authStatus?
+                <Button variantColor="black" variant="ghost" ml="185px" onClick={handleLogout}>
+                   Logout
+                </Button>
+                : " "
+            }
+
             <Flex align="center" justify="space-between" mb="20px">
                 <Heading as="h2" size="lg" fontStyle="italic">
                    <Link as={Link} to="/">Notist</Link>

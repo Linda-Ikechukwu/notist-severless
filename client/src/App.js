@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useContext, createContext } from "react";
 import {Switch, Route, Redirect} from 'react-router-dom';
 
 import AppNav from './components/appNav';
@@ -10,11 +11,21 @@ import Login from './pages/login'
 
 import './App.css';
 
-const App = () => {
+import { Auth } from "aws-amplify";
+
+import { AppContext } from "./libs/context";
+
+const App = (props) => {
+
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+  console.log(props);
+
   return (
     <div className="App">
       <div className="notist">
-          <AppNav/>
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+          <AppNav authStatus={isAuthenticated}/>
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/' component={Home} />
@@ -22,6 +33,7 @@ const App = () => {
             <Route exact path='/notes/:noteTitle' component={Note} />
             <Route component={NotFound}/>
           </Switch>
+        </AppContext.Provider>
       </div>
     </div>
   );
