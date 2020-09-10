@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 
 import { Heading, Flex, IconButton, Button } from "@chakra-ui/core";
 
@@ -11,9 +11,14 @@ const AppNav = ({authStatus}) => {
 
     const { userHasAuthenticated } = useAppContext();
 
+    const history = useHistory();
+
     const handleLogout = async() => {
         await Auth.signOut();
+
         userHasAuthenticated(false);
+
+        history.push("/login");
     }
 
     return (

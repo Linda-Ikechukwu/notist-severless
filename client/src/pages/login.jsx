@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { useHistory } from "react-router-dom";
+
 import {
     FormControl,
     FormLabel,
@@ -21,6 +23,8 @@ const Login = () => {
 
     const { userHasAuthenticated } = useAppContext();
 
+    const history = useHistory();
+
     const validateForm = () => {
         if (email.length < 9) {
             setErrors({ ...errors, emailError: "Please enter a valid email address" });
@@ -37,6 +41,7 @@ const Login = () => {
         try {
             await Auth.signIn(email, password);
             userHasAuthenticated(true);
+            history.push("/");
         } catch (e) {
             alert(e.message);
         }

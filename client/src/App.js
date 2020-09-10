@@ -8,6 +8,7 @@ import AllNotes from './pages/allNotes';
 import Note from './pages/note';
 import NotFound from './pages/notFound'
 import Login from './pages/login'
+import SignUp from './pages/signup'
 
 import './App.css';
 
@@ -37,18 +38,25 @@ const App = (props) => {
       setIsAuthenticating(false);
     }
     checkAuthentication()
-  }, []);
+  }, [isAuthenticated]);
 
   console.log(props);
 
   return (
-   !isAuthenticating &&
+    !isAuthenticating &&
     <div className="App">
       <div className="notist">
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
           <AppNav authStatus={isAuthenticated} />
           <Switch>
-            <Route exact path='/login' component={Login} />
+            <Route exact path='/login' render={() =>
+              isAuthenticated ? (<Redirect to='/' />) : (<Login />)
+            }
+            />
+            <Route exact path='/signup' render={() =>
+              isAuthenticated ? (<Redirect to='/' />) : (<SignUp />)
+            }
+            />
             <Route exact path='/' component={Home} />
             <Route exact path='/notes' component={AllNotes} />
             <Route exact path='/notes/:noteTitle' component={Note} />
