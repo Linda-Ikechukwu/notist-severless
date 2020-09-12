@@ -36,7 +36,7 @@ const NoteForm = () => {
 
     try {
       await createNote({noteTitle,noteBody });
-      history.push("/");
+      history.push("/notes");
     } catch (error) {
       alert(error);
       setIsSending(false);

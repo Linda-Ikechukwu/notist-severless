@@ -66,7 +66,7 @@ const App = (props) => {
             }
             />
             <Route exact path='/notes' component={AllNotes} />
-            <Route exact path='/notes/:noteTitle' component={Note} />
+            <Route exact path='/notes/:noteId' component={Note} />
             <Route component={NotFound} />
           </Switch>
         </AppContext.Provider>
