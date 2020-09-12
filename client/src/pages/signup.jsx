@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 
+import { useHistory, Link } from "react-router-dom";
+
 import {
     FormControl,
     FormLabel,
@@ -9,7 +11,8 @@ import {
     FormErrorMessage,
     Input,
     Button,
-    Flex
+    Flex,
+    Text
 } from "@chakra-ui/core";
 
 import { Auth } from "aws-amplify";
@@ -20,12 +23,9 @@ const SignUp = () => {
 
     const history = useHistory();
 
-    const { userHasAuthenticated } = useAppContext();
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [confirmationCode, setConfirmationCode] = useState("");
 
     const [user, setUser] = useState(null);
 
@@ -51,117 +51,59 @@ const SignUp = () => {
 
         try {
             const newUser = await Auth.signUp({
-                username: fields.email,
-                password: fields.password,
+                username: email,
+                password: password,
             });
             setIsSubmiting(false);
             setUser(newUser);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+            history.push("/confirm");
+
         } catch (e) {
             alert(e.message);
             setIsSubmiting(false);
         }
     }
 
-    const handleConfirmationSubmit = async (event) => {
-        event.preventDefault();
-        setIsSubmiting(true);
-
-        try {
-            await Auth.confirmSignUp(email, confirmationCode);
-            await Auth.signIn(email, password);
-
-            userHasAuthenticated(true);
-            history.push("/");
-
-          } catch (e) {
-            alert(e.message);
-            setIsLoading(false);
-          }
-
-    }
-
     const validateFormInput = () => {
-        return email.length > 0 && password.length > 0 & confirmPassword === password;
-    }
-
-    const validateConfirmationForm = () => {
-        return confirmationCode.length > 0;
-    }
-
-    const confirmationForm = () => {
-        return (
-            <div>
-                <Flex direction="column" align="center" justify="center" mt="100px">
-                    <form onSubmit={handleConfirmationSubmit} className="form" >
-                        <FormControl isRequired>
-                            <FormLabel htmlFor="email">Confirmation Code</FormLabel>
-                            <Input
-                              type="text"
-                              id="confirm-code"
-                              aria-describedby="confirm-helper-text"
-                              value={confirmationCode}
-                              onChange={e => setConfirmationCode(e.target.value)}
-                            />
-                            <FormErrorMessage></FormErrorMessage>
-                            <FormHelperText id="confirm-helper-text">
-                                Please Check your email for code
-                            </FormHelperText>
-                        </FormControl>
-                        <Button
-                            mt={4}
-                            variantColor="yellow"
-                            isLoading={isSubmitting}
-                            type="submit"
-                            isDisabled={!validateConfirmationForm()}
-                        >
-                            Sign Up
-                   </Button>
-                    </form>
-                </Flex>
-            </div>
-        )
-    }
-
-
-    const signUpForm = () => {
-        return (
-            <div>
-                <Flex direction="column" align="center" justify="center" mt="100px">
-                    <form onSubmit={handleSignUpSubmit} className="form" >
-                        <FormControl isRequired>
-                            <FormLabel htmlFor="email">Email address</FormLabel>
-                            <Input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
-                            <FormErrorMessage>{errors.emailError}</FormErrorMessage>
-                        </FormControl>
-                        <FormControl isRequired>
-                            <FormLabel htmlFor="name">Password</FormLabel>
-                            <Input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
-                            <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
-                        </FormControl>
-                        <FormControl isRequired>
-                            <FormLabel htmlFor="name">Confirm Password</FormLabel>
-                            <Input type="password" id="confirm-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-                            <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
-                        </FormControl>
-                        <Button
-                            mt={4}
-                            variantColor="yellow"
-                            isLoading={isSubmitting}
-                            type="submit"
-                            isDisabled={!validateFormInput()}
-                        >
-                            Sign Up
-                       </Button>
-                    </form>
-                </Flex>
-            </div>
-        )
+        return email.length > 0 && password.length > 7 & confirmPassword === password;
     }
 
     return (
-        <>
-          {newUser === null ? signUpForm() : confirmationForm()}
-        </>
+        <div>
+            <Flex direction="column" align="center" justify="center" mt="100px">
+               <Text fontSize="3xl" mb="10px">Sign Up</Text>
+                <form onSubmit={handleSignUpSubmit} className="form" >
+                    <FormControl isRequired>
+                        <FormLabel htmlFor="email">Email address</FormLabel>
+                        <Input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
+                        <FormErrorMessage>{errors.emailError}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl isRequired>
+                        <FormLabel htmlFor="name">Password</FormLabel>
+                        <Input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl isRequired>
+                        <FormLabel htmlFor="name">Confirm Password</FormLabel>
+                        <Input type="password" id="confirm-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+                        <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
+                    </FormControl>
+                    <Button
+                        mt={4}
+                        variantColor="yellow"
+                        isLoading={isSubmitting}
+                        type="submit"
+                        isDisabled={!validateFormInput()}
+                    >
+                        Sign Up
+                   </Button>
+                </form>
+
+                <Text fontSize="sm" as="i" mt="30px">Already have an account? <Link to="/login">Login</Link> .</Text>
+            </Flex>
+        </div>
     )
 }
 

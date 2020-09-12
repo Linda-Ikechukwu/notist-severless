@@ -7,13 +7,13 @@ import { Auth } from "aws-amplify";
 
 import { useAppContext } from "../libs/context";
 
-const AppNav = ({authStatus}) => {
+const AppNav = ({ authStatus }) => {
 
     const { userHasAuthenticated } = useAppContext();
 
     const history = useHistory();
 
-    const handleLogout = async() => {
+    const handleLogout = async () => {
         await Auth.signOut();
 
         userHasAuthenticated(false);
@@ -24,20 +24,21 @@ const AppNav = ({authStatus}) => {
     return (
         <nav>
             {
-                authStatus?
-                <Button variantColor="black" variant="ghost" ml="185px" onClick={handleLogout}>
-                   Logout
+                authStatus ?
+                    <Button variantColor="black" variant="ghost" ml="185px" onClick={handleLogout}>
+                        Logout
                 </Button>
-                : " "
+                    : " "
             }
 
             <Flex align="center" justify="space-between" mb="20px">
                 <Heading as="h2" size="lg" fontStyle="italic">
-                   <Link as={Link} to="/">Notist</Link>
+                    <Link as={Link} to="/">Notist</Link>
                 </Heading>
-                <IconButton as="a" aria-label="See all Notes" icon="drag-handle">
-                   <Link as={Link} to="/notes"> </Link>
-                </IconButton>
+                <Link as={Link} to="/notes">
+                    <IconButton as="a" aria-label="See all Notes" icon="drag-handle">
+                    </IconButton>
+                </Link>
 
             </Flex>
 

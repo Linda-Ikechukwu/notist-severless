@@ -9,12 +9,15 @@ import Note from './pages/note';
 import NotFound from './pages/notFound'
 import Login from './pages/login'
 import SignUp from './pages/signup'
+import ConfirmSignUp from "./pages/confrimSignUp";
+
 
 import './App.css';
 
 import { Auth } from "aws-amplify";
 
 import { AppContext } from "./libs/context";
+
 
 const App = (props) => {
 
@@ -57,7 +60,11 @@ const App = (props) => {
               isAuthenticated ? (<Redirect to='/' />) : (<SignUp />)
             }
             />
-            <Route exact path='/' component={Home} />
+            <Route exact path='/confirm' component={ConfirmSignUp} />
+            <Route exact path='/' render={() =>
+              !isAuthenticated ? (<Redirect to='/login' />) : (<Home/>)
+            }
+            />
             <Route exact path='/notes' component={AllNotes} />
             <Route exact path='/notes/:noteTitle' component={Note} />
             <Route component={NotFound} />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import {
     FormControl,
@@ -8,7 +8,8 @@ import {
     FormErrorMessage,
     Input,
     Button,
-    Flex
+    Flex,
+    Text
 } from "@chakra-ui/core";
 
 import { Auth } from "aws-amplify";
@@ -56,6 +57,7 @@ const Login = () => {
     return (
         <div>
             <Flex direction="column" align="center" justify="center" mt="100px">
+                <Text fontSize="3xl" mb="10px">Login</Text>
                 <form onSubmit={handleSubmit} className="form" >
                     <FormControl isRequired>
                         <FormLabel htmlFor="email">Email address</FormLabel>
@@ -74,9 +76,10 @@ const Login = () => {
                         isDisabled={!validateInput()}
                         isLoading={isSubmitting}
                     >
-                        Submit
+                        Login
                    </Button>
                 </form>
+                <Text fontSize="sm" as="i" mt="30px">Don't have an account yet? <Link to="/signup">Sign Up</Link> .</Text>
             </Flex>
         </div>
     )
