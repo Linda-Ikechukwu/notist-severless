@@ -19,6 +19,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isSubmitting, setIsSubmiting] = useState(false);
     const [errors, setErrors] = useState({ emailError: "Please enter a valid email address", passwordError: "" });
 
     const { userHasAuthenticated } = useAppContext();
@@ -37,13 +38,14 @@ const Login = () => {
 
     const handleSubmit = async(event) => {
         event.preventDefault();
-
+        setIsSubmiting(true);
         try {
             await Auth.signIn(email, password);
             userHasAuthenticated(true);
             history.push("/");
         } catch (e) {
             alert(e.message);
+            setIsSubmiting(false);
         }
     }
 
@@ -70,6 +72,7 @@ const Login = () => {
                         variantColor="yellow"
                         type="submit"
                         isDisabled={!validateInput()}
+                        isLoading={isSubmitting}
                     >
                         Submit
                    </Button>
