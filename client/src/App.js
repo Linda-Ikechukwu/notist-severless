@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useContext, createContext } from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import AppNav from './components/appNav';
@@ -65,7 +64,10 @@ const App = (props) => {
               !isAuthenticated ? (<Redirect to='/login' />) : (<Home/>)
             }
             />
-            <Route exact path='/notes' component={AllNotes} />
+            <Route exact path='/notes' render={() =>
+              !isAuthenticated ? (<Redirect to='/login' />) : (<AllNotes/>)
+            }
+            />
             <Route exact path='/notes/:noteId' component={Note} />
             <Route component={NotFound} />
           </Switch>

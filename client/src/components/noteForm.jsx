@@ -12,7 +12,7 @@ import { API } from "aws-amplify";
 const NoteForm = () => {
 
   const history = useHistory();
-  const [noteTitle, setnoteTitle] = useState("");
+  const [noteTitle, setNoteTitle] = useState("");
   const [noteBody, setNoteBody] = useState("");
   const [isSending, setIsSending] = useState(false);
 
@@ -24,10 +24,10 @@ const NoteForm = () => {
   /*To the amplify API.post method, pass in name of API configured in index.js,
   API path specificied in corrresponding function in severless.yml*/
 
-  const createNote = (note) => {
+  const createNote = async(note) => {
     return API.post("notist", "/notes", {
       body: note
-    });
+    }).then(response => response).catch(error => console.log(error.response.data));
   }
 
   const handleNoteSend = async(event) => {
@@ -54,7 +54,7 @@ const NoteForm = () => {
               size="lg"
               value={noteTitle}
               mt="30px"
-              onChange={e => setnoteTitle(e.target.value)}
+              onChange={e => setNoteTitle(e.target.value)}
             />
            <Textarea
               roundedTop="0"

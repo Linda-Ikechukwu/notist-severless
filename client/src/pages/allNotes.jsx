@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, Link } from "react-router-dom";
+import { useHistory,useParams, Link } from "react-router-dom";
 import { Box, Heading, Skeleton, Text } from "@chakra-ui/core";
 
 import SearchInput from '../components/searchInput'
@@ -11,18 +11,47 @@ import { API } from "aws-amplify";
 
 const AllNotes = () => {
 
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isDeleting, setIsDeleting] = useState(false);
 
+    const { id } = useParams();
     const history = useHistory();
 
     const handleBackButtonClick = () => {
         history.push(`/`);
     }
 
-    const loadNotes = () => {
-        return API.get("notist", "/notes");
+    const deleteNote = async() => {
+        return API.del("notes", `/notes/${id}`).then(response => response).catch(error => console.log(error.response.data));
+    }
+
+    const handleDeleteNote = async(event)=> {
+        event.preventDefault();
+
+        const confirmed = window.confirm(
+          "Are you sure you want to delete this note?"
+        );
+
+        if (!confirmed) {
+          return;
+        }
+
+        setIsDeleting(true);
+
+        try {
+          await deleteNote();
+          history.go();
+
+        } catch (e) {
+          alert(e);
+          setIsDeleting(false);
+        }
+    }
+
+    const loadNotes = async() => {
+        return API.get("notist", "/notes").then(response => response).catch(error => console.log(error.response.data));
     }
 
     //fetch notes from dynamodb on page load
@@ -45,16 +74,16 @@ const AllNotes = () => {
 
     if (isLoading) return (
         <div>
-            <Skeleton height="40px" my="10px" />
-            <Skeleton height="40px" my="10px" />
-            <Skeleton height="40px" my="10px" />
+            <Skeleton height="100px" my="10px" />
+            <Skeleton height="100px" my="10px" />
+            <Skeleton height="100px" my="10px" />
         </div>
     )
 
     return (
 
         <>
-            {notes
+            {notes === null
                 ?
                 <>
                     <SearchInput />
@@ -68,6 +97,8 @@ const AllNotes = () => {
                                   noteTitle={note.noteTitle}
                                   noteBody={note.noteBody}
                                   createdAt={note.createdAt}
+                                  handleDeleteNote={handleDeleteNote}
+                                  isLoading={isDeleting}
                                 />
                             ))
                         }
@@ -75,7 +106,7 @@ const AllNotes = () => {
                 </>
                 :
 
-                <Text fontSize="sm" as="i" mt="30px">You haven't written any notes.<Link to="/">Write one</Link> .</Text>
+                <Text fontSize="sm" as="i" mt="30px">You haven't written any notes.<Link to="/"> Write one</Link>.</Text>
 
            }
 
