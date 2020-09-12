@@ -18,11 +18,10 @@ export const handler = async(event) => {
             userId: event.requestContext.identity.cognitoIdentityId,
             noteId: uuid.v1(),
             createdAt: Date.now(),
-            noteTopic: data.noteTopic,
+            noteTitle: data.noteTitle,
             noteBody: data.noteBody
         }
     };
-
 
     //Try putting parameters into dynamodb Table.
     try {
@@ -30,6 +29,7 @@ export const handler = async(event) => {
         body = params.Item;
         statusCode = 200;
     } catch (err) {
+        console.log(err);
         body = { error: err.message };
         statusCode = 500;
     }

@@ -19,9 +19,9 @@ export const handler = async (event) => {
         },
         // 'UpdateExpression' defines the attributes to be updated
         // 'ExpressionAttributeValues' defines the value in the update expression
-        UpdateExpression: "SET noteTopic = :noteTopic, noteBody = :noteBody",
+        UpdateExpression: "SET noteTitle = :noteTitle, noteBody = :noteBody",
         ExpressionAttributeValues: {
-            ":noteTopic": data.noteTopic || null,
+            ":noteTitle": data.noteTitle || null,
             ":noteBody": data.noteBody || null
         },
         // 'ReturnValues' specifies if and how to return the item's attributes,
