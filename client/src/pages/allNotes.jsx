@@ -60,16 +60,16 @@ const AllNotes = () => {
             try {
                 const notes = await loadNotes();
                 setNotes(notes);
-            } catch (e) {
+            } catch(e) {
                 alert(e);
+                console.log(e.message)
             }
 
             setIsLoading(false);
         }
 
         onLoad();
-    }, []
-    );
+    }, []);
 
 
     if (isLoading) return (
@@ -83,7 +83,7 @@ const AllNotes = () => {
     return (
 
         <>
-            {notes === null
+            {notes
                 ?
                 <>
                     <SearchInput />

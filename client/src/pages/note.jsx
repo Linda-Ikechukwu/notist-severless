@@ -1,10 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useParams, useHistory } from "react-router-dom";
 
 import { Box, Skeleton, Textarea, Input } from "@chakra-ui/core";
-
-import ContentEditable from "react-contenteditable";
 
 import SendButton from '../components/sendButton';
 

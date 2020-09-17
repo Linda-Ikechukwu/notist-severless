@@ -36,13 +36,11 @@ const App = (props) => {
           alert(e);
         }
       }
-      console.log(isAuthenticated);
       setIsAuthenticating(false);
     }
     checkAuthentication()
   }, [isAuthenticated]);
 
-  console.log(props);
 
   return (
     !isAuthenticating &&

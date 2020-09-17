@@ -17,8 +17,6 @@ import {
 
 import { Auth } from "aws-amplify";
 
-import { useAppContext } from "../libs/context";
-
 const SignUp = () => {
 
     const history = useHistory();
@@ -83,6 +81,7 @@ const SignUp = () => {
                     <FormControl isRequired>
                         <FormLabel htmlFor="name">Password</FormLabel>
                         <Input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <FormHelperText>Password should be more than 8 characters with numbers</FormHelperText>
                         <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
                     </FormControl>
                     <FormControl isRequired>
