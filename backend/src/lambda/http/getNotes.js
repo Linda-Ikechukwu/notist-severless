@@ -1,4 +1,7 @@
-import AWS from "aws-sdk";
+import { onError } from "../../libs/error-lib";
+
+const AWSXRay = require("aws-xray-sdk-core");
+const AWS = AWSXRay.captureAWS(require("aws-sdk"));
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -34,6 +37,7 @@ export const handler = async (event) => {
             throw new Error("No entry for this user");
         }
         body = { error: err.message };
+        onError(err);
         statusCode = 500;
     }
 

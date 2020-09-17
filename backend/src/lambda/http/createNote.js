@@ -1,5 +1,8 @@
 import * as uuid from "uuid";
-import AWS from "aws-sdk";
+import { onError } from "../../libs/error-lib";
+
+const AWSXRay = require("aws-xray-sdk-core");
+const AWS = AWSXRay.captureAWS(require("aws-sdk"));
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -29,9 +32,9 @@ export const handler = async(event) => {
         body = params.Item;
         statusCode = 200;
     } catch (err) {
-        console.log(err);
-        body = { error: err.message };
+        body = { error: err };
         statusCode = 500;
+        onError(err);
     }
 
     // Return HTTP response whether success or error

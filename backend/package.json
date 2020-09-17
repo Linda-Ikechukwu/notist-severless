@@ -21,7 +21,8 @@
     "serverless-offline": "^5.3.3"
   },
   "dependencies": {
-    "aws-amplify-serverless-plugin": "^1.4.1",
+    "aws-amplify": "^3.3.0",
+    "aws-xray-sdk": "^3.2.0",
     "uuid": "^7.0.3"
   }
 }

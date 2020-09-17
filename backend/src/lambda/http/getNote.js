@@ -1,4 +1,5 @@
-import AWS from "aws-sdk";
+const AWSXRay = require("aws-xray-sdk-core");
+const AWS = AWSXRay.captureAWS(require("aws-sdk"));
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -27,7 +28,7 @@ export const handler = async (event) => {
         body = result.Item;
         statusCode = 200;
     } catch (err) {
-        if ( ! result.Item) {
+        if ( !result.Item) {
             throw new Error("Item not found.");
         }
         body = { error: err.message };
