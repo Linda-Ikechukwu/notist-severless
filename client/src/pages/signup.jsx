@@ -29,19 +29,7 @@ const SignUp = () => {
 
     const [isSubmitting, setIsSubmiting] = useState(false);
 
-    const [errors, setErrors] = useState({ emailError: "Please enter a valid email address", passwordError: "" });
-
-
-
-    const validateForm = () => {
-        if (email.length < 9) {
-            setErrors({ ...errors, emailError: "Please enter a valid email address" });
-        } else if (password.length < 5) {
-            setErrors({ ...errors, passwordError: "Password must be more than 5 letters" });
-        }
-        alert(errors.passwordError);
-        return errors;
-    }
+    const [error, setError] = useState("");
 
     const handleSignUpSubmit = async (event) => {
         event.preventDefault();
@@ -59,7 +47,7 @@ const SignUp = () => {
             history.push("/confirm");
 
         } catch (e) {
-            alert(e.message);
+            setError(e.message)
             setIsSubmiting(false);
         }
     }
@@ -71,23 +59,24 @@ const SignUp = () => {
     return (
         <div>
             <Flex direction="column" align="center" justify="center" mt="100px">
-               <Text fontSize="3xl" mb="10px">Sign Up</Text>
+                <Text fontSize="3xl" mb="10px">Sign Up</Text>
+                <Text fontSize="10px" fontStyle="italic" mb="15px" color="tomato">{error}</Text>
                 <form onSubmit={handleSignUpSubmit} className="form" >
                     <FormControl isRequired>
                         <FormLabel htmlFor="email">Email address</FormLabel>
                         <Input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
-                        <FormErrorMessage>{errors.emailError}</FormErrorMessage>
+
                     </FormControl>
                     <FormControl isRequired>
                         <FormLabel htmlFor="name">Password</FormLabel>
                         <Input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
                         <FormHelperText>Password should be more than 8 characters with numbers</FormHelperText>
-                        <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
+                       {/*  <FormErrorMessage>{errors.passwordError}</FormErrorMessage> */}
                     </FormControl>
                     <FormControl isRequired>
                         <FormLabel htmlFor="name">Confirm Password</FormLabel>
                         <Input type="password" id="confirm-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-                        <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
+                       {/*  <FormErrorMessage>{errors.passwordError}</FormErrorMessage> */}
                     </FormControl>
                     <Button
                         mt={4}

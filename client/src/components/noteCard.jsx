@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useHistory } from "react-router-dom";
-import { Box, Heading, Text, IconButton } from "@chakra-ui/core";
+import { Box, Heading, Text} from "@chakra-ui/core";
 
-const NoteCard = ({noteTitle, noteBody, noteId, createdAt, handleDeleteNote, isLoading}) => {
+const NoteCard = ({ noteTitle, noteBody, noteId, createdAt}) => {
 
     const history = useHistory();
 
@@ -13,7 +13,7 @@ const NoteCard = ({noteTitle, noteBody, noteId, createdAt, handleDeleteNote, isL
 
     return (
         <div>
-            <Box pos="relative" h="100px" borderWidth="1px" rounded="lg" overflow="hidden" onClick={handleCardClick} mb="20px" p="10px" cursor="pointer">
+            <Box pos="relative" h="110px" borderWidth="1px" rounded="lg" overflow="hidden" onClick={handleCardClick} mb="20px" p="10px" cursor="pointer">
                 <Heading as="h4" size="md">
                     {noteTitle}
                 </Heading>
@@ -21,16 +21,9 @@ const NoteCard = ({noteTitle, noteBody, noteId, createdAt, handleDeleteNote, isL
                 <Text height={32} isTruncated >
                     {noteBody}
                 </Text>
+
             </Box>
-            <IconButton
-              pos="absolute"
-              bottom="0" right="0"
-              variantColor="yellow"
-              aria-label="delete"
-              icon="delete"
-              onClick={handleDeleteNote}
-              isLoading={isLoading}
-            />
+
         </div>
     )
 }

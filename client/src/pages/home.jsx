@@ -8,7 +8,7 @@ import heroImage from '../assets/images/hero-image.png';
 const Home = () => {
    return (
       <Box>
-         <Text mb="20px">Hey Joe, Whats on your mind today?</Text>
+         <Text mb="20px">Hey, Whats on your mind today?</Text>
          <Image
             src={heroImage}
             alt="Hero Image"

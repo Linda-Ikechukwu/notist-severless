@@ -21,21 +21,11 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmiting] = useState(false);
-    const [errors, setErrors] = useState({ emailError: "Please enter a valid email address", passwordError: "" });
+    const [error, setError] = useState("");
 
     const { userHasAuthenticated } = useAppContext();
 
     const history = useHistory();
-
-    const validateForm = () => {
-        if (email.length < 9) {
-            setErrors({ ...errors, emailError: "Please enter a valid email address" });
-        } else if (password.length < 5) {
-            setErrors({ ...errors, passwordError: "Password must be more than 5 letters" });
-        }
-        alert(errors.passwordError);
-        return errors;
-    }
 
     const handleSubmit = async(event) => {
         event.preventDefault();
@@ -45,7 +35,7 @@ const Login = () => {
             userHasAuthenticated(true);
             history.push("/");
         } catch (e) {
-            alert(e.message);
+            setError(e.message)
             setIsSubmiting(false);
         }
     }
@@ -58,16 +48,15 @@ const Login = () => {
         <div>
             <Flex direction="column" align="center" justify="center" mt="100px">
                 <Text fontSize="3xl" mb="10px">Login</Text>
+                <Text fontSize="10px" fontStyle="italic" mb="15px" color="tomato">{error}</Text>
                 <form onSubmit={handleSubmit} className="form" >
                     <FormControl isRequired>
                         <FormLabel htmlFor="email">Email address</FormLabel>
                         <Input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
-                        <FormErrorMessage>{errors.emailError}</FormErrorMessage>
                     </FormControl>
                     <FormControl isRequired>
                         <FormLabel htmlFor="name">Password</FormLabel>
                         <Input type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
-                        <FormErrorMessage>{errors.passwordError}</FormErrorMessage>
                     </FormControl>
                     <Button
                         mt={4}

@@ -25,9 +25,9 @@ const AppNav = ({ authStatus }) => {
         <nav>
             {
                 authStatus ?
-                    <Button variantColor="black" variant="ghost" ml="185px" onClick={handleLogout}>
+                    <Button variantColor="black" fontStyle="italic" variant="ghost" ml="185px" onClick={handleLogout}>
                         Logout
-                </Button>
+                    </Button>
                     : " "
             }
 

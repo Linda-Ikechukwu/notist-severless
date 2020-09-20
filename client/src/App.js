@@ -18,7 +18,7 @@ import { Auth } from "aws-amplify";
 import { AppContext } from "./libs/context";
 
 
-const App = (props) => {
+const App = () => {
 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 

@@ -1,4 +1,4 @@
-import React,{useState, useRef} from 'react';
+import React,{useState} from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Input } from "@chakra-ui/core";
@@ -37,7 +37,7 @@ const NoteForm = () => {
     try {
       await createNote({noteTitle,noteBody });
       console.log('note sent')
-     //history.push("/notes");
+      history.push("/notes");
     }catch (error) {
       alert(error);
       console.log(error);

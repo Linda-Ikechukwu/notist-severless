@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory,useParams, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Box, Heading, Skeleton, Text } from "@chakra-ui/core";
 
 import SearchInput from '../components/searchInput'
@@ -14,40 +14,11 @@ const AllNotes = () => {
     const [notes, setNotes] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isDeleting, setIsDeleting] = useState(false);
 
-    const { id } = useParams();
     const history = useHistory();
 
     const handleBackButtonClick = () => {
         history.push(`/`);
-    }
-
-    const deleteNote = async() => {
-        return API.del("notes", `/notes/${id}`).then(response => response).catch(error => console.log(error.response.data));
-    }
-
-    const handleDeleteNote = async(event)=> {
-        event.preventDefault();
-
-        const confirmed = window.confirm(
-          "Are you sure you want to delete this note?"
-        );
-
-        if (!confirmed) {
-          return;
-        }
-
-        setIsDeleting(true);
-
-        try {
-          await deleteNote();
-          history.go();
-
-        } catch (e) {
-          alert(e);
-          setIsDeleting(false);
-        }
     }
 
     const loadNotes = async() => {
@@ -77,6 +48,7 @@ const AllNotes = () => {
             <Skeleton height="100px" my="10px" />
             <Skeleton height="100px" my="10px" />
             <Skeleton height="100px" my="10px" />
+            <Skeleton height="100px" my="10px" />
         </div>
     )
 
@@ -92,13 +64,11 @@ const AllNotes = () => {
                         <Heading my="20px" as="h3">Your Notes</Heading>
                         {
                             notes.map(note => (
-                                <NoteCard
+                                <NoteCard key={note.noteId}
                                   noteId={note.noteId}
                                   noteTitle={note.noteTitle}
                                   noteBody={note.noteBody}
                                   createdAt={note.createdAt}
-                                  handleDeleteNote={handleDeleteNote}
-                                  isLoading={isDeleting}
                                 />
                             ))
                         }
