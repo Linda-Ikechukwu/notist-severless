@@ -27,12 +27,15 @@ export const handler = async (event) => {
         result = await dynamoDb.get(params).promise();
         body = result.Item;
         statusCode = 200;
+
     } catch (err) {
+
         if ( !result.Item) {
             throw new Error("Item not found.");
         }
         body = { error: err.message };
         statusCode = 500;
+
     }
 
     //Return HTTP response whether success or error

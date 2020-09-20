@@ -8,7 +8,8 @@ export const handler = async (event) => {
     //Initialize body and statusCode variable for HTTP response state;
     let body, statusCode;
 
-    const data = JSON.parse(event.body);
+    const update = JSON.parse(event.body);
+
     const params = {
         TableName: process.env.NOTES_TABLE,
         // 'Key' defines the partition key and sort key of the item to be updated
@@ -22,8 +23,8 @@ export const handler = async (event) => {
         // 'ExpressionAttributeValues' defines the value in the update expression
         UpdateExpression: "SET noteTitle = :noteTitle, noteBody = :noteBody",
         ExpressionAttributeValues: {
-            ":noteTitle": data.noteTitle || null,
-            ":noteBody": data.noteBody || null
+            ":noteTitle": update.noteTitle || null,
+            ":noteBody": update.noteBody || null
         },
         // 'ReturnValues' specifies if and how to return the item's attributes,
         // where ALL_NEW returns all attributes of the item after the update; you

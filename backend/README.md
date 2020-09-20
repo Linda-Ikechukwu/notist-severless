@@ -1,8 +1,8 @@
-# Serverless Node.js Starter
 
-A Serverless starter that adds ES6, TypeScript, serverless-offline, linting, environment variables, and unit test support. Part of the [Serverless Stack](http://serverless-stack.com) guide.
 
-[Serverless Node.js Starter](https://github.com/AnomalyInnovations/serverless-nodejs-starter) uses the [serverless-bundle](https://github.com/AnomalyInnovations/serverless-bundle) plugin and the [serverless-offline](https://github.com/dherault/serverless-offline) plugin. It supports:
+This project was bootstarpped with Serverless starter that adds ES6, TypeScript, serverless-offline, linting, environment variables, and unit test support.
+
+The [Serverless Node.js Starter](https://github.com/AnomalyInnovations/serverless-nodejs-starter) uses the [serverless-bundle](https://github.com/AnomalyInnovations/serverless-bundle) plugin and the [serverless-offline](https://github.com/dherault/serverless-offline) plugin. It supports:
 
 - **Generating optimized Lambda packages with Webpack**
 - **Using ES6 or TypeScript in your handler functions**
@@ -18,34 +18,6 @@ A Serverless starter that adds ES6, TypeScript, serverless-offline, linting, env
 - **No need to manage Webpack or Babel configs**
 
 ---
-
-### Demo
-
-A demo version of this service is hosted on AWS - [`https://z6pv80ao4l.execute-api.us-east-1.amazonaws.com/dev/hello`](https://z6pv80ao4l.execute-api.us-east-1.amazonaws.com/dev/hello)
-
-And here is the ES6 source behind it
-
-``` javascript
-export const hello = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: `Go Serverless v1.0! ${(await message({ time: 1, copy: 'Your function executed successfully!'}))}`,
-      input: event,
-    }),
-  };
-};
-
-const message = ({ time, ...rest }) => new Promise((resolve, reject) =>
-  setTimeout(() => {
-    resolve(`${rest.copy} (with a delay)`);
-  }, time * 1000)
-);
-```
-
-### Upgrading from v1.x
-
-We have detailed instructions on how to upgrade your app to the v2.0 of the starter if you were using v1.x before. [Read about it here](https://github.com/AnomalyInnovations/serverless-nodejs-starter/releases/tag/v2.0).
 
 ### Requirements
 
@@ -135,11 +107,11 @@ custom:
 
 To [override the default config](https://eslint.org/docs/user-guide/configuring), add a `.eslintrc.json` file. To ignore ESLint for specific files, add it to a `.eslintignore` file.
 
-### Support
 
-- Open a [new issue](https://github.com/AnomalyInnovations/serverless-nodejs-starter/issues/new) if you've found a bug or have some suggestions.
-- Or submit a pull request!
+To use this project, simply carry out the requirements first. Then,
 
----
+1. `git clone`
+2. `npm install`
 
-This repo is maintained by [Anomaly Innovations](https://anoma.ly); makers of [Seed](https://seed.run) and [Serverless Stack](https://serverless-stack.com).
+
+

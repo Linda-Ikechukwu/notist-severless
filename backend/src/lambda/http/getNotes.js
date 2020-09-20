@@ -29,7 +29,7 @@ export const handler = async (event) => {
 
     //Try sending a http reuest to get a note from the dynamoDB table.
     try {
-        result = await dynamoDb.guery(params).promise();
+        result = await dynamoDb.query(params).promise();
         body = result.Items;
         statusCode = 200;
     }catch (err) {

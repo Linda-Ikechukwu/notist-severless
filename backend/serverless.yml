@@ -94,8 +94,8 @@ functions:
         Resource:
           - '*'
 
-  updateNotes:
-    handler: src/lambda/http/getNotes.handler
+  updateNote:
+    handler: src/lambda/http/updateNote.handler
     events:
       - http:
           path: notes/{id}
